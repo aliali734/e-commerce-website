@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login | E-Commerce</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="admin-badge">Admin Panel</div>
+        <h1 class="auth-title">Admin Sign In</h1>
+        <p class="auth-subtitle">Access the administration dashboard.</p>
+
+        <div id="ui-message" class="ui-message" style="display: none"></div>
+
+        <div class="auth-form">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter admin email"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <div class="form-footer">
+            <a href="../forgot-password/forgot-password.html" class="forgot-link">
+              Forgot password?
+            </a>
+          </div>
+
+          <button type="button" id="loginBtn" class="btn btn-primary">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../csrf-and-token-functions/get-csrf-cookie-token-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/safe-json-parser-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/ui-message-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/auto-redirect-if-logged-in-frontend.js"></script>
+    <script src="login-process-frontend.js"></script>
+  </body>
+</html>

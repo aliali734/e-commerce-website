@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Logout | E-Commerce</title>
+    <link rel="stylesheet" href="logout.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="admin-badge">Admin Panel</div>
+        <h1 class="auth-title">Signing Out</h1>
+        <p class="auth-subtitle">Please wait while we sign you out...</p>
+        <div id="ui-message" class="ui-message" style="display: none"></div>
+      </div>
+    </div>
+
+    <script src="../../csrf-and-token-functions/get-csrf-cookie-token-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/safe-json-parser-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/ui-message-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/force-logout-frontend.js"></script>
+    <script src="logout-process-frontend.js"></script>
+  </body>
+</html>

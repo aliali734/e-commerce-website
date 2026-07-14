@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Register | E-Commerce</title>
+    <link rel="stylesheet" href="register.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="admin-badge">Admin Panel</div>
+        <h1 class="auth-title">Create Admin Account</h1>
+        <p class="auth-subtitle">Register a new administrator account.</p>
+
+        <div id="ui-message" class="ui-message" style="display: none"></div>
+
+        <div class="auth-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Choose an admin username"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter admin email"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="adminSecret">Admin Secret Key</label>
+            <input
+              type="password"
+              id="adminSecret"
+              name="adminSecret"
+              placeholder="Enter the admin registration secret"
+              required
+            />
+          </div>
+
+          <button type="button" id="registerBtn" class="btn btn-primary">
+            Create Admin Account
+          </button>
+        </div>
+
+        <p class="auth-link">
+          Already have an account?
+          <a href="../login/login.html">Sign in</a>
+        </p>
+      </div>
+    </div>
+
+    <script src="../../csrf-and-token-functions/get-csrf-cookie-token-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/safe-json-parser-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/ui-message-frontend.js"></script>
+    <script src="../../csrf-and-token-functions/auto-redirect-if-logged-in-frontend.js"></script>
+    <script src="register-process-frontend.js"></script>
+  </body>
+</html>
