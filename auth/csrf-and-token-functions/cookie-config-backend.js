@@ -1,8 +1,3 @@
-/**
- * Returns the standard cookie configuration object for auth cookies.
- * @param {number} [maxAge] - Cookie max age in milliseconds. Defaults to env value.
- * @returns {object} Cookie options object.
- */
 function getCookieConfig(maxAge) {
   return {
     httpOnly: true,
@@ -12,5 +7,4 @@ function getCookieConfig(maxAge) {
     path: "/",
   };
 }
-
 module.exports = getCookieConfig;

@@ -11,7 +11,7 @@ function createFacebookStrategy() {
     {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: `${process.env.FRONTEND_URL}/auth/user/oauth/facebook/callback`,
+      callbackURL: `${process.env.SERVER_URL}/auth/user/oauth/facebook/callback`,
       profileFields: ["id", "displayName", "emails"],
     },
     async (accessToken, refreshToken, profile, done) => {
