@@ -30,6 +30,7 @@ const initPassport = require("./auth/user/oauth/passport-init-backend");
 // CSRF
 const { ensureCsrfCookie } = require("./auth/csrf-and-token-functions/ensure-csrf-cookie-frontend");
 const csrfTokenRoute = require("./auth/csrf-and-token-functions/csrf-token-route-backend");
+const serveFrontendAssets = require("./auth/csrf-and-token-functions/serve-frontend-assets-backend");
 
 async function startServer() {
   const app = express();
@@ -84,8 +85,10 @@ async function startServer() {
   app.use(ensureCsrfCookie);
   app.use("/auth/csrf-token", csrfTokenRoute);
 
-  // Static files
-  app.use(express.static("public"));
+  // Static files — auth/ lives at the project root, mixed with backend
+  // files, so we can't use plain express.static() without risking exposing
+  // *-backend.js source. This only serves html/css/*-frontend.js.
+  app.use(serveFrontendAssets);
 
   // User auth routes
   app.use("/auth/user/register", userRegisterRoute);

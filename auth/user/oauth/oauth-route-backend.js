@@ -13,7 +13,7 @@ const handleOAuthFailure = require("./oauth-failure-handler-backend");
  */
 function createOAuthRoutes() {
   const router = express.Router();
-  const failureRedirect = `${process.env.FRONTEND_URL}/auth/user/oauth/oauth-callback-frontend.html?error=oauth_failed`;
+  const failureRedirect = "/auth/user/oauth/oauth-callback-frontend.html?error=oauth_failed";
 
   // Google
   router.get(
