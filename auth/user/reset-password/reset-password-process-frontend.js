@@ -30,9 +30,11 @@ async function handleResetPasswordSubmit() {
     return;
   }
 
-  const csrfToken = getCsrfCookieToken();
-  if (!csrfToken) {
-    showUiMessage("Security token missing. Please refresh the page.", "error");
+  let csrfToken;
+  try {
+    csrfToken = await getOrFetchCsrfToken();
+  } catch {
+    showUiMessage("Could not reach the server. Please try again.", "error");
     return;
   }
 
@@ -40,7 +42,7 @@ async function handleResetPasswordSubmit() {
   btn.textContent = "Resetting...";
 
   try {
-    const response = await fetch("/auth/user/reset-password", {
+    const response = await fetch(`${window.BACKEND_URL}/auth/user/reset-password`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -49,6 +51,10 @@ async function handleResetPasswordSubmit() {
       },
       body: JSON.stringify({ token, password }),
     });
+
+    if (response.status === 403) {
+      clearCachedCsrfToken();
+    }
 
     const { data, error } = safeJsonParser(await response.text());
 

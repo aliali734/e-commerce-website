@@ -13,6 +13,7 @@ const handleOAuthFailure = require("./oauth-failure-handler-backend");
  */
 function createOAuthRoutes() {
   const router = express.Router();
+  const failureRedirect = `${process.env.FRONTEND_URL}/auth/user/oauth/oauth-callback-frontend.html?error=oauth_failed`;
 
   // Google
   router.get(
@@ -24,7 +25,7 @@ function createOAuthRoutes() {
     "/google/callback",
     passport.authenticate("google", {
       session: false,
-      failureRedirect: "/auth/user/oauth/oauth-callback-frontend.html?error=oauth_failed",
+      failureRedirect,
     }),
     handleOAuthCallback
   );
@@ -39,7 +40,7 @@ function createOAuthRoutes() {
     "/facebook/callback",
     passport.authenticate("facebook", {
       session: false,
-      failureRedirect: "/auth/user/oauth/oauth-callback-frontend.html?error=oauth_failed",
+      failureRedirect,
     }),
     handleOAuthCallback
   );

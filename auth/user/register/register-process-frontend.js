@@ -24,9 +24,11 @@ async function handleRegisterSubmit() {
     return;
   }
 
-  const csrfToken = getCsrfCookieToken();
-  if (!csrfToken) {
-    showUiMessage("Security token missing. Please refresh the page.", "error");
+  let csrfToken;
+  try {
+    csrfToken = await getOrFetchCsrfToken();
+  } catch {
+    showUiMessage("Could not reach the server. Please try again.", "error");
     return;
   }
 
@@ -34,7 +36,7 @@ async function handleRegisterSubmit() {
   btn.textContent = "Creating account...";
 
   try {
-    const response = await fetch("/auth/user/register", {
+    const response = await fetch(`${window.BACKEND_URL}/auth/user/register`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -43,6 +45,10 @@ async function handleRegisterSubmit() {
       },
       body: JSON.stringify({ username, email, password }),
     });
+
+    if (response.status === 403) {
+      clearCachedCsrfToken();
+    }
 
     const { data, error } = safeJsonParser(await response.text());
 

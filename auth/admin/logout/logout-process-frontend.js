@@ -3,10 +3,15 @@
  * Sends a logout request to the backend, then clears session data and redirects.
  */
 async function handleAdminLogout() {
-  const csrfToken = getCsrfCookieToken();
+  let csrfToken = null;
+  try {
+    csrfToken = await getOrFetchCsrfToken();
+  } catch {
+    // Continue with client-side logout even if we can't reach the backend
+  }
 
   try {
-    await fetch("/auth/admin/logout", {
+    await fetch(`${window.BACKEND_URL}/auth/admin/logout`, {
       method: "POST",
       credentials: "include",
       headers: {

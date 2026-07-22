@@ -29,6 +29,7 @@ const initPassport = require("./auth/user/oauth/passport-init-backend");
 
 // CSRF
 const { ensureCsrfCookie } = require("./auth/csrf-and-token-functions/ensure-csrf-cookie-frontend");
+const csrfTokenRoute = require("./auth/csrf-and-token-functions/csrf-token-route-backend");
 
 async function startServer() {
   const app = express();
@@ -81,6 +82,7 @@ async function startServer() {
 
   // CSRF cookie on all GET requests
   app.use(ensureCsrfCookie);
+  app.use("/auth/csrf-token", csrfTokenRoute);
 
   // Static files
   app.use(express.static("public"));

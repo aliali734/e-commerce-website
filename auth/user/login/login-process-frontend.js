@@ -12,9 +12,11 @@ async function handleLoginSubmit() {
     return;
   }
 
-  const csrfToken = getCsrfCookieToken();
-  if (!csrfToken) {
-    showUiMessage("Security token missing. Please refresh the page.", "error");
+  let csrfToken;
+  try {
+    csrfToken = await getOrFetchCsrfToken();
+  } catch {
+    showUiMessage("Could not reach the server. Please try again.", "error");
     return;
   }
 
@@ -22,7 +24,7 @@ async function handleLoginSubmit() {
   btn.textContent = "Signing in...";
 
   try {
-    const response = await fetch("/auth/user/login", {
+    const response = await fetch(`${window.BACKEND_URL}/auth/user/login`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -31,6 +33,10 @@ async function handleLoginSubmit() {
       },
       body: JSON.stringify({ email, password }),
     });
+
+    if (response.status === 403) {
+      clearCachedCsrfToken();
+    }
 
     const { data, error } = safeJsonParser(await response.text());
 

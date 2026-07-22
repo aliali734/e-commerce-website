@@ -11,9 +11,11 @@ async function handleForgotPasswordSubmit() {
     return;
   }
 
-  const csrfToken = getCsrfCookieToken();
-  if (!csrfToken) {
-    showUiMessage("Security token missing. Please refresh the page.", "error");
+  let csrfToken;
+  try {
+    csrfToken = await getOrFetchCsrfToken();
+  } catch {
+    showUiMessage("Could not reach the server. Please try again.", "error");
     return;
   }
 
@@ -21,7 +23,7 @@ async function handleForgotPasswordSubmit() {
   btn.textContent = "Sending...";
 
   try {
-    const response = await fetch("/auth/user/forgot-password", {
+    const response = await fetch(`${window.BACKEND_URL}/auth/user/forgot-password`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -31,6 +33,10 @@ async function handleForgotPasswordSubmit() {
       body: JSON.stringify({ email }),
     });
 
+    if (response.status === 403) {
+      clearCachedCsrfToken();
+    }
+
     const { data, error } = safeJsonParser(await response.text());
 
     if (error || !data) {
@@ -38,7 +44,6 @@ async function handleForgotPasswordSubmit() {
       return;
     }
 
-    // Always show a neutral message to avoid user enumeration
     showUiMessage(
       "If that email is registered, a reset link has been sent.",
       "success"
