@@ -4,13 +4,16 @@ const getCookieConfig = require("../../csrf-and-token-functions/cookie-config-ba
 /**
  * Handles the OAuth success callback after Passport has authenticated the user.
  * Issues a JWT auth cookie and redirects the user to the OAuth success page.
+ *
+ * Redirects to FRONTEND_URL (GitHub Pages) rather than a relative path,
+ * since the callback HTML page is served from there, not from this backend.
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  */
 function handleOAuthCallback(req, res) {
   if (!req.user) {
     return res.redirect(
-      "/auth/user/oauth/oauth-callback-frontend.html?error=auth_failed"
+      `${process.env.FRONTEND_URL}/auth/user/oauth/oauth-callback-frontend.html?error=auth_failed`
     );
   }
 
@@ -23,7 +26,7 @@ function handleOAuthCallback(req, res) {
   res.cookie("authToken", token, getCookieConfig());
 
   return res.redirect(
-    "/auth/user/oauth/oauth-callback-frontend.html?status=success"
+    `${process.env.FRONTEND_URL}/auth/user/oauth/oauth-callback-frontend.html?status=success`
   );
 }
 

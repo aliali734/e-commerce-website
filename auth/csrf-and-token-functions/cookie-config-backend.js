@@ -1,9 +1,12 @@
 /**
  * Returns the standard cookie configuration object for auth cookies.
  *
- * Frontend and backend are one single Render service (same origin), so
- * "lax" is the right setting here — it's the standard, safe default for
- * same-origin apps and also plays nicely with OAuth redirect flows.
+ * Frontend (GitHub Pages) and backend (Render) are separate origins, so
+ * cookies must be sent cross-site. Browsers only allow that with
+ * sameSite: "none", which in turn requires secure: true — both GitHub
+ * Pages and Render serve over HTTPS by default, so this holds in
+ * production. In development (same-origin localhost), "lax" is used
+ * since "none" without HTTPS is rejected by browsers.
  *
  * @param {number} [maxAge] - Cookie max age in milliseconds. Defaults to env value.
  * @returns {object} Cookie options object.
@@ -13,7 +16,7 @@ function getCookieConfig(maxAge) {
   return {
     httpOnly: true,
     secure: isProduction,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     maxAge: maxAge || parseInt(process.env.COOKIE_MAX_AGE) || 604800000,
     path: "/",
   };

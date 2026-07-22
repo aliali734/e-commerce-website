@@ -1,12 +1,9 @@
 /**
  * The backend's absolute base URL.
  *
- * For this project, frontend and backend are one single Render service
- * (same origin), so this defaults to an empty string — every
- * `${window.BACKEND_URL}/auth/...` call then naturally resolves to a
- * relative path like `/auth/...`, which is correct for same-origin.
- *
- * Only set this to a real absolute URL if you later split the frontend
- * and backend into two separate deployments.
+ * Frontend (GitHub Pages) and backend (Render) are genuinely separate
+ * origins, so every fetch() call from the frontend must target this
+ * absolute URL — a relative path like fetch("/auth/user/login") would
+ * hit GitHub Pages' own static server instead of the backend, and 404.
  */
-window.BACKEND_URL = window.BACKEND_URL || "";
+window.BACKEND_URL = window.BACKEND_URL || "https://e-commerce-website-j3yr.onrender.com";
